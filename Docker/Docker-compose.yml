@@ -1,0 +1,49 @@
+version: "3"
+services:
+  selenium-hub:
+    image: selenium/hub:latest
+    container_name: selenium-hub
+    ports:
+      - "4444:4444"
+
+  chrome_ver_81:
+    image: selenium/node-chrome-debug:latest
+    volumes:
+      - /dev/shm:/dev/shm
+    depends_on:
+      - selenium-hub
+    environment:
+      - HUB_HOST=selenium-hub
+      - HUB_PORT=4444
+      - NODE_MAX_INSTANCES=1
+      - NODE_MAX_SESSION=1
+    ports:
+      - "5900"
+
+  chrome_ver_75:
+    image: selenium/node-chrome-debug:3.141.59-palladium
+    volumes:
+      - /dev/shm:/dev/shm
+    depends_on:
+      - selenium-hub
+    environment:
+      - HUB_HOST=selenium-hub
+      - HUB_PORT=4444
+      - NODE_MAX_INSTANCES=1
+      - NODE_MAX_SESSION=1
+    ports:
+      - "5900"
+
+  firefox_ver_75:
+    image: selenium/node-firefox-debug:latest
+    volumes:
+      - /dev/shm:/dev/shm
+    depends_on:
+      - selenium-hub
+    environment:
+      - HUB_HOST=selenium-hub
+      - HUB_PORT=4444
+      - NODE_MAX_INSTANCES=1
+      - NODE_MAX_SESSION=1
+    ports:
+        - "5900"
